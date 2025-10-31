@@ -1,4 +1,4 @@
-#TokenSecure
+TokenSecure
 O TokenSecure é uma solução robusta projetada para fortalecer os processos de autenticação e autorização em aplicações web e mobile. Com foco em segurança, nosso sistema oferece uma estrutura abrangente para proteger seus recursos e dados sensíveis contra potenciais ameaças.
 
 Características
