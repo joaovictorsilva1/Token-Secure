@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    # ❌ remova a linha abaixo que causava conflito
+    # ports: ["3306:3306"]
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./migrations/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+
+  auth:
+    build: ./services/auth-python
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      DB_NAME: ${MYSQL_DATABASE}
+      ACCESS_TOKEN_EXPIRE_MINUTES: 15
+      REFRESH_TOKEN_EXPIRE_DAYS: 7
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+    ports: ["8000:8000"]
+    depends_on: [db]
+
+  resource:
+    build: ./services/resource-node
+    environment:
+      PORT: 3000
+      JWT_PUBLIC_AUD: tokensecure
+      JWT_ACCESS_SECRET: ${JWT_SECRET}
+    ports: ["3000:3000"]
+    depends_on: [auth]
+
+volumes:
+  db_data:
