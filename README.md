@@ -11,4 +11,4 @@ Easy Integration: Seamlessly integrate TokenSecure into your existing web and mo
 TokenSecure is licensed under the MIT License. See the LICENSE file for more information.
 
 # Technologies:
-PYTHON, Docker, EXPRESS.JS, MYSQL, JWT E HTTPS.
+PYTHON, DOCKER, EXPRESS.JS, MYSQL, JWT E HTTPS.
